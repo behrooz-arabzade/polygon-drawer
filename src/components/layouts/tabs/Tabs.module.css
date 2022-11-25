@@ -6,7 +6,8 @@
 }
 
 .tabsParent {
-    flex: 1
+    flex: 1;
+    padding: 4px
 }
 
 .addButton {

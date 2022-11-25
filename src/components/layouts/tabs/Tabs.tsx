@@ -6,11 +6,12 @@ const Tabs: FC = () => {
   return (
     <div className={styles.root}>
       <div className={styles.tabsParent}>
+        Polygon Drawer (v0.0.1)
         {/* Iterate between available tabs */}
       </div>
-      <Button variant="text" className={styles.addButton}>
+      {/* <Button variant="text" className={styles.addButton}>
         +
-      </Button>
+      </Button> */}
     </div>
   );
 };
