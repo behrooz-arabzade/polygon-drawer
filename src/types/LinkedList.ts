@@ -11,6 +11,8 @@ interface ILinkedList<T> {
   traverse(): T[];
   size(): number;
   search(comparator: (data: T) => boolean): Node<T> | null;
+  checkLast(): Node<T> | null;
+  checkHead(): Node<T> | null;
 }
 
 export default class LinkedList<T> implements ILinkedList<T> {
@@ -79,5 +81,18 @@ export default class LinkedList<T> implements ILinkedList<T> {
     };
 
     return this.head ? checkNext(this.head) : null;
+  }
+
+  public checkLast(): Node<T> | null {
+    const getLast = (node: Node<T> | null): Node<T> | null => {
+      if (node === null) return null;
+      return node.next ? getLast(node.next) : node;
+    };
+
+    return getLast(this.head);
+  }
+
+  public checkHead(): Node<T> | null {
+    return this.head;
   }
 }
