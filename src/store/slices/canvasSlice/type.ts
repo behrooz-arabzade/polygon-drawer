@@ -1,11 +1,9 @@
+import Polygon from "types/CanvasObjects/Polygon/Polygon";
+
 export interface MyCanvasState {
-  canvasObjects: CanvasObject[];
+  canvasObjects: Polygon[];
   size: CanvasSize;
   zoom: number;
-}
-
-export interface CanvasObject {
-  id: string;
 }
 
 export interface Point2d {

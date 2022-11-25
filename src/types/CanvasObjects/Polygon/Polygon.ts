@@ -1,10 +1,10 @@
-import { CanvasObject, Point2d } from "store/slices/canvasSlice/type";
+import { Point2d } from "store/slices/canvasSlice/type";
 import LinkedList from "types/LinkedList";
 import { PolygonState } from "./type";
 
-export default class Polygon implements CanvasObject {
-  private points: LinkedList<Point2d>;
-  private state: PolygonState;
+export default class Polygon {
+  public points: LinkedList<Point2d>;
+  public state: PolygonState;
 
   constructor(public id: string, startingPoint: Point2d) {
     this.points = new LinkedList<Point2d>();
