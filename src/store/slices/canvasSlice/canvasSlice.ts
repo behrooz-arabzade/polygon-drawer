@@ -3,18 +3,8 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { CanvasSize, MyCanvasState } from "./type";
 import Polygon from "types/CanvasObjects/Polygon/Polygon";
 
-const testPolygon = new Polygon("test", {
-  x: 0,
-  y: 0,
-});
-
-testPolygon.addPoint({ x: 100, y: 0 });
-testPolygon.addPoint({ x: 100, y: 100 });
-testPolygon.addPoint({ x: 0, y: 100 });
-testPolygon.addPoint({ x: 0, y: 0 });
-
 const initialState: MyCanvasState = {
-  canvasObjects: [testPolygon],
+  canvasObjects: [],
   size: {
     height: 500,
     width: 500,
@@ -62,6 +52,12 @@ export const canvasSlice = createSlice({
   },
 });
 
-export const { setSize } = canvasSlice.actions;
+export const {
+  setSize,
+  setZoom,
+  addCanvasObject,
+  updateCanvasObject,
+  removeCanvasObject,
+} = canvasSlice.actions;
 
 export default canvasSlice.reducer;

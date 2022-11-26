@@ -5,8 +5,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .stage {
     background-color: white;
+}
+
+.zoom {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    margin: 0;
 }

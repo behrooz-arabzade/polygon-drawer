@@ -6,7 +6,7 @@ export interface ToolbarState {
 }
 
 const initialState: ToolbarState = {
-  selectedTool: "pan",
+  selectedTool: "select",
 };
 
 export const toolbarSlice = createSlice({

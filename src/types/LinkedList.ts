@@ -13,6 +13,7 @@ interface ILinkedList<T> {
   search(comparator: (data: T) => boolean): Node<T> | null;
   checkLast(): Node<T> | null;
   checkHead(): Node<T> | null;
+  checkAtIndex(index: number): Node<T> | null;
 }
 
 export default class LinkedList<T> implements ILinkedList<T> {
@@ -94,5 +95,18 @@ export default class LinkedList<T> implements ILinkedList<T> {
 
   public checkHead(): Node<T> | null {
     return this.head;
+  }
+
+  public checkAtIndex(index: number): Node<T> | null {
+    if (index >= this.size()) return null;
+
+    let i = 0;
+    let node: Node<T> | null = this.head;
+    while (i !== index) {
+      i++;
+      node = node?.next!;
+    }
+
+    return node;
   }
 }

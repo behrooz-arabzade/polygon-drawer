@@ -12,6 +12,14 @@ export default class Polygon {
     this.state = "open";
   }
 
+  public updatePoint(index: number, newPoint: Point2d): void {
+    let node = this.points.checkAtIndex(index);
+
+    if (!node) return;
+
+    node.data = newPoint;
+  }
+
   public addPoint(point: Point2d): void {
     if (
       JSON.stringify(this.points.checkLast()?.data) === JSON.stringify(point)
