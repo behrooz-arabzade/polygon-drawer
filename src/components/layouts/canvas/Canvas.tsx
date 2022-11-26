@@ -26,7 +26,6 @@ const Canvas: FC = () => {
   const startNewOne = (startingPos: Point2d) => {
     setDrawing(true);
 
-    console.log("startNewOne startingPos", startingPos);
     const newObject = new Polygon(getRandomString(10), startingPos);
 
     dispatch(addCanvasObject(newObject));
@@ -70,7 +69,6 @@ const Canvas: FC = () => {
 
   return (
     <div className={styles.root}>
-      <p className={styles.zoom}>{`Zoom level: ${canvas.zoom}`}</p>
       <Stage
         className={styles.stage}
         width={canvas.size.width * canvas.zoom}
