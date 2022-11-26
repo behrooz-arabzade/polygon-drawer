@@ -5,17 +5,17 @@ import {
   ForwardRefRenderFunction,
   useImperativeHandle,
 } from "react";
-import styles from "./ToolbarItem.module.css";
-import cs from "classnames";
+import { useDispatch, useSelector } from "react-redux";
 import Polygon from "types/CanvasObjects/Polygon/Polygon";
 import { Point2d } from "store/slices/canvasSlice/type";
-import { Stage, Layer, Group, Line, Rect } from "react-konva";
+import { Stage, Layer, Group, Line, Rect, Circle } from "react-konva";
 import { KonvaEventObject } from "konva/lib/Node";
-import { Stage as StageClass } from "konva/lib/Stage";
 import {
-  getKonvaPoint,
   getMousePos,
+  getPoint2d,
 } from "components/layouts/canvas/CanvasHelper";
+import { AppDispatch, RootState } from "store/store";
+import { updateCanvasObject } from "store/slices/canvasSlice/canvasSlice";
 
 interface ICanvasObject {
   obj: Polygon;
@@ -38,15 +38,19 @@ const CanvasObject: ForwardRefRenderFunction<
   }));
 
   const [mouseAtStartPoint, setMouseAtStartPoint] = useState(false);
+  const dispatch: AppDispatch = useDispatch();
+  const zoom = useSelector((state: RootState) => state.canvas.zoom);
 
   const handleClick = (event: KonvaEventObject<MouseEvent>) => {
     const stage = event.target.getStage();
     const mousePos = getMousePos(stage);
 
     if (mouseAtStartPoint && obj.points.size() >= 3) {
+      obj.close();
       onComplete();
     } else {
-      obj.addPoint({ x: mousePos[0]!, y: mousePos[1]! });
+      let point = getPoint2d(mousePos, zoom);
+      obj.addPoint(point);
     }
   };
 
@@ -64,6 +68,16 @@ const CanvasObject: ForwardRefRenderFunction<
     setMouseAtStartPoint(false);
   };
 
+  const onPointMove =
+    (index: number) => (event: KonvaEventObject<MouseEvent>) => {
+      const stage = event.target.getStage();
+      const mousePos = getPoint2d(getMousePos(stage));
+
+      console.log("onPointMove index", index, mousePos);
+      obj.updatePoint(index, mousePos);
+      dispatch(updateCanvasObject(obj));
+    };
+
   const pointLines = obj.points
     .traverse()
     .concat(obj.state === "close" ? [] : mousePos!)
@@ -75,7 +89,12 @@ const CanvasObject: ForwardRefRenderFunction<
 
   return (
     <>
-      <Line points={pointLines} stroke="black" strokeWidth={2} closed={true} />
+      <Line
+        points={pointLines}
+        stroke="black"
+        strokeWidth={2}
+        closed={obj.state === "close"}
+      />
 
       {obj.points.traverse().map((point, index) => {
         const startPointAttribute =
@@ -87,16 +106,17 @@ const CanvasObject: ForwardRefRenderFunction<
               }
             : null;
         return (
-          <Rect
+          <Circle
             key={index}
             x={point.x}
             y={point.y}
-            width={4}
-            height={4}
+            width={5}
+            height={5}
             fill="white"
             stroke="black"
             strokeWidth={2}
-            draggable
+            // draggable
+            onDragMove={onPointMove(index)}
             {...startPointAttribute}
           />
         );
