@@ -64,7 +64,7 @@ const Tabs: FC = () => {
         className={styles.addButton}
         onClick={createNewTab}
       >
-        +
+        ➕
       </Button>
     </div>
   );

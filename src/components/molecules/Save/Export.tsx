@@ -20,7 +20,7 @@ const Export: FC = () => {
 
   return (
     <Button variant="contained" className={styles.root} onClick={handleClick}>
-      Export current tab json
+      Export
     </Button>
   );
 };
