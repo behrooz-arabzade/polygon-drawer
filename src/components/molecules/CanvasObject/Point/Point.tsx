@@ -25,6 +25,7 @@ const Point: FC<IPoint> = ({ index, pointX, pointY, isDrawing, polygonPointSize,
 
   //...... redux states ......//
   const zoom = useSelector((state: RootState) => state.canvases.tabs[state.canvases.selectedTabId].canvasData.zoom);
+  const currentDrawingObjectId = useSelector((state: RootState) => state.canvases.tabs[state.canvases.selectedTabId].canvasData.currentDrawingObjectId);
   //...... redux states ......//
 
   //...... handlers ......//
@@ -88,7 +89,7 @@ const Point: FC<IPoint> = ({ index, pointX, pointY, isDrawing, polygonPointSize,
       fill="white"
       stroke="black"
       strokeWidth={2}
-      draggable={!isDrawing}
+      draggable={!isDrawing && !Boolean(currentDrawingObjectId)}
       onDragStart={!isDrawing ? onPointDragStart : undefined}
       onDragMove={!isDrawing ? onDragMove(index) : undefined}
       onDragEnd={!isDrawing ? onPointDragEnd(index) : undefined}
