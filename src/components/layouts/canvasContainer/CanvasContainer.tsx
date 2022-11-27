@@ -2,7 +2,7 @@ import { FC } from "react";
 import styles from "./CanvasContainer.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "store/store";
-import { setZoom } from "store/slices/canvasSlice/canvasSlice";
+import { setZoom } from "store/slices/canvasesSlice/canvasesSlice";
 import Zoom from "components/molecules/Zoom/Zoom";
 import Canvas from "./canvas/Canvas";
 import Export from "components/molecules/Save/Export";
@@ -10,7 +10,7 @@ import Import from "components/molecules/Import/Import";
 
 const CanvasContainer: FC = () => {
   //...... redux states ......//
-  const zoom = useSelector((state: RootState) => state.canvas.zoom);
+  const zoom = useSelector((state: RootState) => state.canvases.tabs[state.canvases.selectedTabId].canvasData.zoom);
   //...... redux states ......//
 
   //...... constants ......//

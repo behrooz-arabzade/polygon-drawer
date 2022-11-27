@@ -8,9 +8,9 @@ import CanvasObject, {
   ICanvasObjectRef,
 } from "components/molecules/CanvasObject/CanvasObject";
 import { getMousePos, getRandomString, getPoint2d, isLeftClick, areNear } from './CanvasHelper';
-import { Point2d } from "store/slices/canvasSlice/type";
+import { Point2d } from "store/slices/canvasesSlice/type";
 import Polygon from "types/CanvasObjects/Polygon/Polygon";
-import { addCanvasObject, setCurrentDrawingId, setZoom } from "store/slices/canvasSlice/canvasSlice";
+import { addCanvasObject, setCurrentDrawingId, setZoom } from "store/slices/canvasesSlice/canvasesSlice";
 
 const Canvas: FC = () => {
   //...... local states ......//
@@ -20,7 +20,7 @@ const Canvas: FC = () => {
   //...... local states ......//
 
   //...... redux states ......//
-  const { zoom, canvasObjects, size, currentDrawingObjectId } = useSelector((state: RootState) => state.canvas);
+  const { zoom, canvasObjects, size, currentDrawingObjectId } = useSelector((state: RootState) => state.canvases.tabs[state.canvases.selectedTabId].canvasData);
   const selectedTool = useSelector(
     (state: RootState) => state.toolbar.selectedTool
   );
