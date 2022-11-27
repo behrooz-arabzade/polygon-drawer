@@ -25,7 +25,7 @@ const Import: FC = () => {
 
   return (
     <Button variant="contained" component="label" className={styles.root}>
-      Import here from json
+      Import
       <input
         hidden
         accept="application/json"

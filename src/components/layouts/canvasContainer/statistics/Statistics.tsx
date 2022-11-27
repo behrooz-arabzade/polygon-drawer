@@ -1,3 +1,4 @@
+import CanvasSize from "components/molecules/statistics/CanvasSize";
 import ObjectStat from "components/molecules/statistics/ObjectStat";
 import PointStat from "components/molecules/statistics/PointStat";
 import Zoom from "components/molecules/statistics/Zoom";
@@ -10,6 +11,7 @@ const Statistics: FC = () => {
       <Zoom />
       <ObjectStat />
       <PointStat />
+      <CanvasSize />
     </div>
   );
 };

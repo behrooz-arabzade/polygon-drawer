@@ -25,6 +25,13 @@
     margin: 0 12px 0 0
 }
 
+/* For mobile phones: */
+@media only screen and (max-width: 768px) {
+    .title {
+        display: none
+    }
+}
+
 .tabsContainer {
     flex: 1;
     overflow: hidden;
