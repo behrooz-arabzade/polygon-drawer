@@ -5,7 +5,8 @@ import { RootState } from "store/store";
 import { setZoom } from "store/slices/canvasSlice/canvasSlice";
 import Zoom from "components/molecules/Zoom/Zoom";
 import Canvas from "./canvas/Canvas";
-import Save from "components/molecules/Save/Save";
+import Export from "components/molecules/Save/Export";
+import Import from "components/molecules/Import/Import";
 
 const CanvasContainer: FC = () => {
   //...... redux states ......//
@@ -32,7 +33,8 @@ const CanvasContainer: FC = () => {
   return (
     <>
       <Zoom />
-      <Save />
+      <Export />
+      <Import />
       <div
         className={styles.root}
         onWheel={handleWheel}

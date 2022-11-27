@@ -55,6 +55,12 @@ export const canvasSlice = createSlice({
 
       state.canvasObjects.splice(index, 1);
     },
+    importCanvas: (state, action: PayloadAction<MyCanvasState>) => {
+      state.canvasObjects = action.payload.canvasObjects;
+      state.currentDrawingObjectId = action.payload.currentDrawingObjectId;
+      state.size = action.payload.size;
+      state.zoom = action.payload.zoom;
+    }
   },
 });
 
@@ -65,6 +71,7 @@ export const {
   addCanvasObject,
   updateCanvasObject,
   removeCanvasObject,
+  importCanvas,
 } = canvasSlice.actions;
 
 export default canvasSlice.reducer;
