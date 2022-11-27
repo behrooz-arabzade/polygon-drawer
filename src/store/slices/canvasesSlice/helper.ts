@@ -20,3 +20,7 @@ export const getNewTabName = (state?: TabsState): string => {
     let name = "New Canvas";
     return name;
 }
+
+export const isInitialState = (state?: TabsState): string => {
+    return JSON.stringify(state?.selectedTabId)
+}

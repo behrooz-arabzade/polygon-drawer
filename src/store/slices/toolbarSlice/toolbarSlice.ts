@@ -6,7 +6,7 @@ export interface ToolbarState {
 }
 
 const initialState: ToolbarState = {
-  selectedTool: "select",
+  selectedTool: "polygon",
 };
 
 export const toolbarSlice = createSlice({

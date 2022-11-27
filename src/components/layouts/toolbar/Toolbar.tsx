@@ -7,14 +7,14 @@ import styles from "./Toolbar.module.css";
 import { toolSelected } from "store/slices/toolbarSlice/toolbarSlice";
 
 const tools: Tool[] = [
-  {
-    name: "select",
-    icon: "sel",
-  },
-  {
-    name: "hand",
-    icon: "hand",
-  },
+  // {
+  //   name: "select",
+  //   icon: "sel",
+  // },
+  // {
+  //   name: "hand",
+  //   icon: "hand",
+  // },
   {
     name: "polygon",
     icon: "pol",
