@@ -29,3 +29,16 @@ export const getRandomString = (length: number): string => {
   }
   return result;
 };
+
+export const isLeftClick = (evt: any): boolean => {
+  evt = evt || window.event;
+  const button = evt.button;
+  return button == 0;
+}
+
+export const areNear = (point1: Point2d | undefined, point2: Point2d | undefined, threshold: number = 5): boolean => {
+  if (!point1 || !point2) return false;
+  return (
+    point1.x - point2.x < threshold && point1.y - point2.y < threshold
+  )
+}

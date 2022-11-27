@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { CanvasSize, MyCanvasState } from "./type";
+import { CanvasSize, MyCanvasState, Point2d } from './type';
 import Polygon from "types/CanvasObjects/Polygon/Polygon";
+import { getRandomString } from "components/layouts/canvasContainer/canvas/CanvasHelper";
+import { SerializablePolygon } from "types/CanvasObjects/Polygon/type";
 
 const initialState: MyCanvasState = {
   canvasObjects: [],
@@ -10,6 +12,7 @@ const initialState: MyCanvasState = {
     width: 500,
   },
   zoom: 1,
+  currentDrawingObjectId: null
 };
 
 export const canvasSlice = createSlice({
@@ -22,27 +25,30 @@ export const canvasSlice = createSlice({
     setZoom: (state, action: PayloadAction<number>) => {
       state.zoom = action.payload;
     },
-    addCanvasObject: (state, action: PayloadAction<Polygon>) => {
+    setCurrentDrawingId: (state, action: PayloadAction<string | null>) => {
+      state.currentDrawingObjectId = action.payload;
+    },
+    addCanvasObject: (state, action: PayloadAction<SerializablePolygon>) => {
       state.canvasObjects.push(action.payload);
     },
-    updateCanvasObject: (state, action: PayloadAction<Polygon>) => {
+    updateCanvasObject: (state, action: PayloadAction<SerializablePolygon>) => {
       const index = state.canvasObjects.findIndex(
         (o) => o.id === action.payload.id
       );
 
-      if (index <= 0) {
+      if (index < 0) {
         console.error("Object does not exist !!!");
         return;
       }
 
       state.canvasObjects.splice(index, 1, action.payload);
     },
-    removeCanvasObject: (state, action: PayloadAction<Polygon>) => {
+    removeCanvasObject: (state, action: PayloadAction<SerializablePolygon>) => {
       const index = state.canvasObjects.findIndex(
         (o) => o.id === action.payload.id
       );
 
-      if (index <= 0) {
+      if (index < 0) {
         console.error("Object does not exist !!!");
         return;
       }
@@ -55,6 +61,7 @@ export const canvasSlice = createSlice({
 export const {
   setSize,
   setZoom,
+  setCurrentDrawingId,
   addCanvasObject,
   updateCanvasObject,
   removeCanvasObject,

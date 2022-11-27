@@ -1,15 +1,17 @@
 import { Point2d } from "store/slices/canvasSlice/type";
 import LinkedList from "types/LinkedList";
-import { PolygonState } from "./type";
+import { PolygonState, SerializablePolygon } from './type';
 
 export default class Polygon {
   public points: LinkedList<Point2d>;
   public state: PolygonState;
 
-  constructor(public id: string, startingPoint: Point2d) {
+  constructor(public id: string, initialPoints: Point2d[], initialState: PolygonState = "open") {
     this.points = new LinkedList<Point2d>();
-    this.points.insertInBegin(startingPoint);
-    this.state = "open";
+    initialPoints.forEach(point => {
+      this.points.insertAtEnd(point);
+    });
+    this.state = initialState;
   }
 
   public updatePoint(index: number, newPoint: Point2d): void {
@@ -67,5 +69,13 @@ export default class Polygon {
     if (this.state === "close") return;
 
     this.state = "close";
+  }
+
+  public getSerializablePolygon(): SerializablePolygon {
+    return {
+      id: this.id,
+      points: this.points.traverse(),
+      state: this.state
+    }
   }
 }

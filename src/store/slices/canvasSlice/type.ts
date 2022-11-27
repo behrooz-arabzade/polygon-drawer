@@ -1,9 +1,10 @@
-import Polygon from "types/CanvasObjects/Polygon/Polygon";
+import { SerializablePolygon } from "types/CanvasObjects/Polygon/type";
 
 export interface MyCanvasState {
-  canvasObjects: Polygon[];
+  canvasObjects: SerializablePolygon[];
   size: CanvasSize;
   zoom: number;
+  currentDrawingObjectId: string | null
 }
 
 export interface Point2d {

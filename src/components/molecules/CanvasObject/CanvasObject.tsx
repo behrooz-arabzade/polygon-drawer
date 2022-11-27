@@ -1,4 +1,4 @@
-import {
+import React, {
   FC,
   useState,
   forwardRef,
@@ -13,14 +13,16 @@ import { KonvaEventObject } from "konva/lib/Node";
 import {
   getMousePos,
   getPoint2d,
-} from "components/layouts/canvas/CanvasHelper";
-import { AppDispatch, RootState } from "store/store";
+} from "components/layouts/canvasContainer/canvas/CanvasHelper";
+import { RootState } from "store/store";
 import { updateCanvasObject } from "store/slices/canvasSlice/canvasSlice";
+import { SerializablePolygon } from "types/CanvasObjects/Polygon/type";
+import Point from "./Point/Point";
 
 interface ICanvasObject {
-  obj: Polygon;
-  mousePos: Point2d | undefined;
-  onComplete: () => void;
+  obj: SerializablePolygon;
+  mousePos?: Point2d;
+  onComplete?: () => void;
 }
 
 export interface ICanvasObjectRef {
@@ -31,98 +33,84 @@ const CanvasObject: ForwardRefRenderFunction<
   ICanvasObjectRef,
   ICanvasObject
 > = ({ obj, mousePos, onComplete }, forwardedRef) => {
+  //...... ref implementation ......//
   useImperativeHandle(forwardedRef, () => ({
     handleClick(event: KonvaEventObject<MouseEvent>) {
       handleClick(event);
     },
   }));
+  //...... ref implementation ......//
 
-  const [mouseAtStartPoint, setMouseAtStartPoint] = useState(false);
-  const dispatch: AppDispatch = useDispatch();
+  //...... local states ......//
+  //...... local states ......//
+
+  //...... redux states ......//
   const zoom = useSelector((state: RootState) => state.canvas.zoom);
+  //...... redux states ......//
 
-  const handleClick = (event: KonvaEventObject<MouseEvent>) => {
-    const stage = event.target.getStage();
-    const mousePos = getMousePos(stage);
-
-    if (mouseAtStartPoint && obj.points.size() >= 3) {
-      obj.close();
-      onComplete();
-    } else {
-      let point = getPoint2d(mousePos, zoom);
-      obj.addPoint(point);
-    }
-  };
-
-  const handleMouseOverStartPoint = (event: KonvaEventObject<MouseEvent>) => {
-    if (obj.points.size() < 3 || obj.state === "close") return;
-
-    event.target.scale({ x: 2, y: 2 });
-
-    setMouseAtStartPoint(true);
-  };
-
-  const handleMouseOutStartPoint = (event: KonvaEventObject<MouseEvent>) => {
-    event.target.scale({ x: 1, y: 1 });
-
-    setMouseAtStartPoint(false);
-  };
-
-  const onPointMove =
-    (index: number) => (event: KonvaEventObject<MouseEvent>) => {
-      const stage = event.target.getStage();
-      const mousePos = getPoint2d(getMousePos(stage));
-
-      console.log("onPointMove index", index, mousePos);
-      obj.updatePoint(index, mousePos);
-      dispatch(updateCanvasObject(obj));
-    };
-
-  const pointLines = obj.points
+  //...... constants ......//
+  const dispatch = useDispatch();
+  const polygon = new Polygon(obj.id, obj.points, obj.state);
+  const isDrawing = polygon.state === "open";
+  const linePoints = polygon.points
     .traverse()
-    .concat(obj.state === "close" ? [] : mousePos!)
+    .concat(polygon.state === "close" ? [] : mousePos!) // to draw last line of open polygon
     .reduce<number[]>((array, p) => {
       array.push(p.x);
       array.push(p.y);
       return array;
     }, []);
+  //...... constants ......//
+
+  //...... handlers ......//
+  const handleClick = (event: KonvaEventObject<MouseEvent>) => {
+    const mousePos = getMousePos(event.target.getStage());
+
+    polygon.addPoint(getPoint2d(mousePos, zoom));
+
+    dispatch(updateCanvasObject(polygon.getSerializablePolygon()));
+  };
+
+  const onFirstPointClick = () => {
+    polygon.close();
+    onComplete?.();
+
+    dispatch(updateCanvasObject(polygon.getSerializablePolygon()));
+  }
+
+  const onPointMove = (index: number, mousePos: Point2d) => {
+    polygon.updatePoint(index, mousePos);
+    dispatch(updateCanvasObject(polygon.getSerializablePolygon()));
+  };
+  //...... handlers ......//
 
   return (
     <>
       <Line
-        points={pointLines}
+        points={linePoints}
         stroke="black"
         strokeWidth={2}
-        closed={obj.state === "close"}
+        closed={!isDrawing}
       />
 
-      {obj.points.traverse().map((point, index) => {
-        const startPointAttribute =
-          index === 0
-            ? {
-                hitStrokeWidth: 12,
-                onMouseOver: handleMouseOverStartPoint,
-                onMouseOut: handleMouseOutStartPoint,
-              }
-            : null;
-        return (
-          <Circle
-            key={index}
-            x={point.x}
-            y={point.y}
-            width={5}
-            height={5}
-            fill="white"
-            stroke="black"
-            strokeWidth={2}
-            // draggable
-            onDragMove={onPointMove(index)}
-            {...startPointAttribute}
-          />
-        );
-      })}
+      {
+        polygon.points.traverse().map((point, index) => {
+          return (
+            <Point
+              key={index}
+              index={index}
+              onPointMove={onPointMove}
+              pointX={point.x}
+              pointY={point.y}
+              polygonPointSize={polygon.points.size()}
+              isDrawing={isDrawing}
+              onFirstPointClick={onFirstPointClick}
+            />
+          );
+        })
+      }
     </>
   );
 };
 
-export default forwardRef(CanvasObject);
+export default React.memo(forwardRef(CanvasObject));

@@ -1,6 +1,6 @@
 import ToolbarItem from "components/molecules/ToolbarItem/ToolbarItem";
-import { FC } from "react";
-import { AppDispatch, RootState } from "store/store";
+import { FC, useCallback } from "react";
+import { RootState } from "store/store";
 import { Tool } from "types/Tool";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./Toolbar.module.css";
@@ -22,28 +22,37 @@ const tools: Tool[] = [
 ];
 
 const Toolbar: FC = () => {
-  const dispatch: AppDispatch = useDispatch();
-
+  //...... redux states ......//
   const selectedTool = useSelector(
     (state: RootState) => state.toolbar.selectedTool
   );
+  //...... redux states ......//
 
-  const handlToolSelected = (tool: Tool) => {
-    dispatch(toolSelected(tool.name));
-  };
+  //...... constants ......//
+  const dispatch = useDispatch();
+  //...... constants ......//
+
+  //...... handlers ......//
+  const handleToolSelected = useCallback((name: string) => {
+    dispatch(toolSelected(name));
+  }, [])
+  //...... handlers ......//
 
   return (
     <div className={styles.root}>
-      {tools.map((tool) => {
-        return (
-          <ToolbarItem
-            selected={tool.name === selectedTool}
-            name={tool.name}
-            icon={tool.icon}
-            onClick={() => handlToolSelected(tool)}
-          />
-        );
-      })}
+      {
+        tools.map((tool) => {
+          return (
+            <ToolbarItem
+              key={tool.name}
+              selected={tool.name === selectedTool}
+              name={tool.name}
+              icon={tool.icon}
+              onSelect={handleToolSelected}
+            />
+          );
+        })
+      }
     </div>
   );
 };
