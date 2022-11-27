@@ -9,11 +9,12 @@
 }
 
 .name {
-    margin: 6px 0 0 0
+    margin: 6px 0 0 0;
+    color: black !important;
 }
 
 .selected {
-    background-color: aquamarine !important;
+    /* background-color: aquamarine !important; */
 }
 
 .close {

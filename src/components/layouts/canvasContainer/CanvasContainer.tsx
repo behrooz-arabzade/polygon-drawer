@@ -2,11 +2,11 @@ import { FC } from "react";
 import styles from "./CanvasContainer.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "store/store";
-import { setZoom } from "store/slices/canvasesSlice/canvasesSlice";
-import Zoom from "components/molecules/Zoom/Zoom";
 import Canvas from "./canvas/Canvas";
 import Export from "components/molecules/Save/Export";
 import Import from "components/molecules/Import/Import";
+import Statistics from "./statistics/Statistics";
+import { setZoom } from "store/slices/canvasesSlice/canvasesSlice";
 
 const CanvasContainer: FC = () => {
   //...... redux states ......//
@@ -21,7 +21,7 @@ const CanvasContainer: FC = () => {
   const handleWheel = (event: React.WheelEvent) => {
     let direction = event.deltaY > 0 ? -1 : 1;
 
-    const zoomSpeed = 1.01;
+    const zoomSpeed = 1.02;
 
     const newZoom =
       direction > 0 ? zoom * zoomSpeed : zoom / zoomSpeed;
@@ -32,7 +32,7 @@ const CanvasContainer: FC = () => {
 
   return (
     <>
-      <Zoom />
+      <Statistics />
       <Export />
       <Import />
       <div
