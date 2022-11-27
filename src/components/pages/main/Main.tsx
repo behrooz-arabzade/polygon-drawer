@@ -10,10 +10,15 @@ import { isInitialState } from "store/slices/canvasesSlice/helper";
 import styles from "./Main.module.css";
 
 const Main: FC = () => {
+  //...... local states ......//
   const [showSessionModal, setShowSessionModal] = useState(false);
+  //...... local states ......//
 
+  //...... Constants ......//
   const dispatch = useDispatch();
+  //...... Constants ......//
 
+  //...... handlers ......//
   useEffect(() => {
     if (!isInitialState(store.getState())) {
       setShowSessionModal(true);
@@ -24,6 +29,7 @@ const Main: FC = () => {
     dispatch(resetSession());
     setShowSessionModal(false);
   };
+  //...... handlers ......//
 
   return (
     <>

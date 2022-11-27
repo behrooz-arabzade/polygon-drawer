@@ -19,7 +19,6 @@ import Polygon from "types/CanvasObjects/Polygon/Polygon";
 import {
   addCanvasObject,
   setCurrentDrawingId,
-  setZoom,
 } from "store/slices/canvasesSlice/canvasesSlice";
 
 const Canvas: FC = () => {

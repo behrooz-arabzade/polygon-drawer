@@ -1,14 +1,14 @@
 import React, { FC } from "react";
 import styles from "./Tab.module.css";
-import MuiTab from '@mui/material/Tab';
-import cs from 'classnames';
+import MuiTab from "@mui/material/Tab";
+import cs from "classnames";
 
 interface ITab {
-  name: string,
+  name: string;
   id: string;
-  selected?: boolean,
-  value?: any,
-  onClick: (tabId: string) => void
+  selected?: boolean;
+  value?: any;
+  onClick: (tabId: string) => void;
 }
 
 const Tab: FC<ITab> = ({ name, id, selected, value, onClick }) => {
@@ -17,7 +17,7 @@ const Tab: FC<ITab> = ({ name, id, selected, value, onClick }) => {
     e.preventDefault();
     e.stopPropagation();
     // TODO handle closing tab
-  }
+  };
   //...... handlers ......//
 
   return (
