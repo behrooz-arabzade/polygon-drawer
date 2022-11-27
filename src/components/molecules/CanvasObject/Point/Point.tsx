@@ -5,7 +5,7 @@ import { RootState } from "store/store";
 import { Circle } from "react-konva";
 import { KonvaEventObject } from "konva/lib/Node";
 import { useState } from 'react';
-import { Point2d } from "store/slices/canvasSlice/type";
+import { Point2d } from "store/slices/canvasesSlice/type";
 import { getMousePos, getPoint2d } from "components/layouts/canvasContainer/canvas/CanvasHelper";
 
 interface IPoint {
@@ -24,7 +24,7 @@ const Point: FC<IPoint> = ({ index, pointX, pointY, isDrawing, polygonPointSize,
   //...... local states ......//
 
   //...... redux states ......//
-  const zoom = useSelector((state: RootState) => state.canvas.zoom);
+  const zoom = useSelector((state: RootState) => state.canvases.tabs[state.canvases.selectedTabId].canvasData.zoom);
   //...... redux states ......//
 
   //...... handlers ......//

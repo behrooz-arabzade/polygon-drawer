@@ -5,7 +5,7 @@ import { store } from "store/store";
 
 const Export: FC = () => {
   const handleClick = () => {
-    const canvas = store.getState().canvas;
+    const canvas = store.getState().canvases.tabs[store.getState().canvases.selectedTabId].canvasData;
     let a = document.createElement("a")
     a.href = URL.createObjectURL(
       new Blob([JSON.stringify(canvas, null, 2)], { type: "application/json" })

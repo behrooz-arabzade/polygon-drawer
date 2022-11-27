@@ -1,5 +1,5 @@
 import { Stage as StageClass } from "konva/lib/Stage";
-import { Point2d } from "store/slices/canvasSlice/type";
+import { Point2d } from "store/slices/canvasesSlice/type";
 
 export const getMousePos = (stage: StageClass | null) => {
   return [stage?.getPointerPosition()?.x, stage?.getPointerPosition()?.y];

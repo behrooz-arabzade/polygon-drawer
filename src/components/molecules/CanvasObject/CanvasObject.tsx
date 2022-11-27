@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Polygon from "types/CanvasObjects/Polygon/Polygon";
-import { Point2d } from "store/slices/canvasSlice/type";
+import { Point2d } from "store/slices/canvasesSlice/type";
 import { Stage, Layer, Group, Line, Rect, Circle } from "react-konva";
 import { KonvaEventObject } from "konva/lib/Node";
 import {
@@ -15,7 +15,7 @@ import {
   getPoint2d,
 } from "components/layouts/canvasContainer/canvas/CanvasHelper";
 import { RootState } from "store/store";
-import { updateCanvasObject } from "store/slices/canvasSlice/canvasSlice";
+import { updateCanvasObject } from "store/slices/canvasesSlice/canvasesSlice";
 import { SerializablePolygon } from "types/CanvasObjects/Polygon/type";
 import Point from "./Point/Point";
 
@@ -45,7 +45,7 @@ const CanvasObject: ForwardRefRenderFunction<
   //...... local states ......//
 
   //...... redux states ......//
-  const zoom = useSelector((state: RootState) => state.canvas.zoom);
+  const zoom = useSelector((state: RootState) => state.canvases.tabs[state.canvases.selectedTabId].canvasData.zoom);
   //...... redux states ......//
 
   //...... constants ......//

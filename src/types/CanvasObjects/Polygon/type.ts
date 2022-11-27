@@ -1,4 +1,4 @@
-import { Point2d } from "store/slices/canvasSlice/type";
+import { Point2d } from "store/slices/canvasesSlice/type";
 import LinkedList from "types/LinkedList";
 
 export type PolygonState = "open" | "close";

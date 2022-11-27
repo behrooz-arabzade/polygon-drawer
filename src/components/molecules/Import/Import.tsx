@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import styles from "./Import.module.css";
 import { Button } from '@mui/material';
 import { store } from "store/store";
-import { importCanvas } from "store/slices/canvasSlice/canvasSlice";
+import { importCanvas } from "store/slices/canvasesSlice/canvasesSlice";
 
 const Import: FC = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,7 +1,7 @@
 import { combineReducers, configureStore, } from "@reduxjs/toolkit";
 import uiReducer from "./slices/uiSlice/uiSlice";
 import toolbarReducer from "./slices/toolbarSlice/toolbarSlice";
-import canvasReducer from "./slices/canvasSlice/canvasSlice";
+import canvasesReducer from "./slices/canvasesSlice/canvasesSlice";
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk'
@@ -14,7 +14,7 @@ const persistConfig = {
 const reducers = combineReducers({
   ui: uiReducer,
   toolbar: toolbarReducer,
-  canvas: canvasReducer,
+  canvases: canvasesReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers)
