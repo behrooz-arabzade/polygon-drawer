@@ -1,0 +1,13 @@
+.root {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.selected {
+    background-color: rgb(188, 252, 255);
+    cursor: unset;
+}

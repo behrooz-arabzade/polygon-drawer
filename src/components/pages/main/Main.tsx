@@ -1,4 +1,4 @@
-import Canvas from "components/layouts/canvas/Canvas";
+import CanvasContainer from "components/layouts/canvasContainer/CanvasContainer";
 import Tabs from "components/layouts/tabs/Tabs";
 import Toolbar from "components/layouts/toolbar/Toolbar";
 import { FC } from "react";
@@ -11,7 +11,7 @@ const Main: FC = () => {
         <Tabs />
       </div>
       <div className={styles.canvasContainer}>
-        <Canvas />
+        <CanvasContainer />
       </div>
       <div className={styles.toolbarContainer}>
         <Toolbar />

@@ -1,0 +1,22 @@
+.root {
+    text-transform: unset !important;
+}
+
+.labelRoot {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.name {
+    margin: 6px 0 0 0;
+    color: black !important;
+}
+
+.selected {
+    /* background-color: aquamarine !important; */
+}
+
+.close {
+    margin: 6px 0 0 0
+}

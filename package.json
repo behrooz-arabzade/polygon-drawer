@@ -14,6 +14,7 @@
     "@types/node": "^16.18.3",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
+    "classnames": "^2.3.2",
     "konva": "^8.3.14",
     "notistack": "^2.0.8",
     "react": "^18.2.0",
@@ -21,6 +22,8 @@
     "react-konva": "^18.2.3",
     "react-redux": "^8.0.5",
     "react-scripts": "5.0.1",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.4.2",
     "typescript": "^4.9.3",
     "web-vitals": "^2.1.4"
   },
