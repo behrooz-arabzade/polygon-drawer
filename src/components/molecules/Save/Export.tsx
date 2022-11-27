@@ -1,9 +1,9 @@
 import React, { FC } from "react";
-import styles from "./Save.module.css";
+import styles from "./Export.module.css";
 import { Button } from '@mui/material';
 import { store } from "store/store";
 
-const Save: FC = () => {
+const Export: FC = () => {
   const handleClick = () => {
     const canvas = store.getState().canvas;
     let a = document.createElement("a")
@@ -19,4 +19,4 @@ const Save: FC = () => {
   );
 };
 
-export default React.memo(Save);
+export default React.memo(Export);
