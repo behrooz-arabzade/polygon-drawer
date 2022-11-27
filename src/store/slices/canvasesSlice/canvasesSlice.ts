@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { CanvasSize, TabsState, CanvasData, CanvasTab } from './type';
+import { CanvasSize, TabsState, CanvasData, CanvasTab } from "./type";
 import { getRandomString } from "components/layouts/canvasContainer/canvas/CanvasHelper";
 import { SerializablePolygon } from "types/CanvasObjects/Polygon/type";
-import { getCurrentTab, getInitialCanvasData, getNewTabName } from './helper';
+import { getCurrentTab, getInitialCanvasData, getNewTabName } from "./helper";
 
 const initialTabId = getRandomString(10);
 const initialState: TabsState = {
@@ -11,10 +11,10 @@ const initialState: TabsState = {
     [initialTabId]: {
       id: initialTabId,
       name: getNewTabName(),
-      canvasData: getInitialCanvasData()
-    }
+      canvasData: getInitialCanvasData(),
+    },
   },
-  selectedTabId: initialTabId
+  selectedTabId: initialTabId,
 };
 
 export const canvasesSlice = createSlice({
@@ -43,7 +43,11 @@ export const canvasesSlice = createSlice({
         return;
       }
 
-      getCurrentTab(state).canvasData.canvasObjects.splice(index, 1, action.payload);
+      getCurrentTab(state).canvasData.canvasObjects.splice(
+        index,
+        1,
+        action.payload
+      );
     },
     removeCanvasObject: (state, action: PayloadAction<SerializablePolygon>) => {
       const index = getCurrentTab(state).canvasData.canvasObjects.findIndex(
@@ -58,8 +62,10 @@ export const canvasesSlice = createSlice({
       getCurrentTab(state).canvasData.canvasObjects.splice(index, 1);
     },
     importCanvas: (state, action: PayloadAction<CanvasData>) => {
-      getCurrentTab(state).canvasData.canvasObjects = action.payload.canvasObjects;
-      getCurrentTab(state).canvasData.currentDrawingObjectId = action.payload.currentDrawingObjectId;
+      getCurrentTab(state).canvasData.canvasObjects =
+        action.payload.canvasObjects;
+      getCurrentTab(state).canvasData.currentDrawingObjectId =
+        action.payload.currentDrawingObjectId;
       getCurrentTab(state).canvasData.size = action.payload.size;
       getCurrentTab(state).canvasData.zoom = action.payload.zoom;
     },
@@ -69,14 +75,18 @@ export const canvasesSlice = createSlice({
         id,
         name: getNewTabName(state),
         canvasData: getInitialCanvasData(),
-      }
+      };
 
       state.tabs[id] = tab;
       state.selectedTabId = id;
     },
     selectTab: (state, action: PayloadAction<string>) => {
       state.selectedTabId = action.payload;
-    }
+    },
+    resetSession: (state) => {
+      state.selectedTabId = initialState.selectedTabId;
+      state.tabs = initialState.tabs;
+    },
   },
 });
 
@@ -89,7 +99,8 @@ export const {
   removeCanvasObject,
   importCanvas,
   addNewTab,
-  selectTab
+  selectTab,
+  resetSession,
 } = canvasesSlice.actions;
 
 export default canvasesSlice.reducer;

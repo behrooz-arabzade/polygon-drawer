@@ -41,11 +41,11 @@ const CanvasObject: ForwardRefRenderFunction<
   }));
   //...... ref implementation ......//
 
-  //...... local states ......//
-  //...... local states ......//
-
   //...... redux states ......//
-  const zoom = useSelector((state: RootState) => state.canvases.tabs[state.canvases.selectedTabId].canvasData.zoom);
+  const zoom = useSelector(
+    (state: RootState) =>
+      state.canvases.tabs[state.canvases.selectedTabId].canvasData.zoom
+  );
   //...... redux states ......//
 
   //...... constants ......//
@@ -76,7 +76,7 @@ const CanvasObject: ForwardRefRenderFunction<
     onComplete?.();
 
     dispatch(updateCanvasObject(polygon.getSerializablePolygon()));
-  }
+  };
 
   const onPointMove = (index: number, mousePos: Point2d) => {
     polygon.updatePoint(index, mousePos);
@@ -93,22 +93,20 @@ const CanvasObject: ForwardRefRenderFunction<
         closed={!isDrawing}
       />
 
-      {
-        polygon.points.traverse().map((point, index) => {
-          return (
-            <Point
-              key={index}
-              index={index}
-              onPointMove={onPointMove}
-              pointX={point.x}
-              pointY={point.y}
-              polygonPointSize={polygon.points.size()}
-              isDrawing={isDrawing}
-              onFirstPointClick={onFirstPointClick}
-            />
-          );
-        })
-      }
+      {polygon.points.traverse().map((point, index) => {
+        return (
+          <Point
+            key={index}
+            index={index}
+            onPointMove={onPointMove}
+            pointX={point.x}
+            pointY={point.y}
+            polygonPointSize={polygon.points.size()}
+            isDrawing={isDrawing}
+            onFirstPointClick={onFirstPointClick}
+          />
+        );
+      })}
     </>
   );
 };

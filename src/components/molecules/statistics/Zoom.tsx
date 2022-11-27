@@ -5,7 +5,10 @@ import { RootState } from "store/store";
 
 const Zoom: FC = () => {
   //...... redux states ......//
-  const zoom = useSelector((state: RootState) => state.canvases.tabs[state.canvases.selectedTabId].canvasData.zoom);
+  const zoom = useSelector(
+    (state: RootState) =>
+      state.canvases.tabs[state.canvases.selectedTabId].canvasData.zoom
+  );
   //...... redux states ......//
 
   return (

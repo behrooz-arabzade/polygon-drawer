@@ -1,22 +1,56 @@
 import CanvasContainer from "components/layouts/canvasContainer/CanvasContainer";
+import SessionModal from "components/layouts/sessionModal/SessionModal";
 import Tabs from "components/layouts/tabs/Tabs";
 import Toolbar from "components/layouts/toolbar/Toolbar";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { resetSession } from "store/slices/canvasesSlice/canvasesSlice";
+import { store } from "store/store";
+import { isInitialState } from "store/slices/canvasesSlice/helper";
 import styles from "./Main.module.css";
 
 const Main: FC = () => {
+  //...... local states ......//
+  const [showSessionModal, setShowSessionModal] = useState(false);
+  //...... local states ......//
+
+  //...... Constants ......//
+  const dispatch = useDispatch();
+  //...... Constants ......//
+
+  //...... handlers ......//
+  useEffect(() => {
+    if (!isInitialState(store.getState())) {
+      setShowSessionModal(true);
+    }
+  }, []);
+
+  const onResetSession = () => {
+    dispatch(resetSession());
+    setShowSessionModal(false);
+  };
+  //...... handlers ......//
+
   return (
-    <div className={styles.root}>
-      <div className={styles.tabContainer}>
-        <Tabs />
+    <>
+      <div className={styles.root}>
+        <div className={styles.tabContainer}>
+          <Tabs />
+        </div>
+        <div className={styles.toolbarContainer}>
+          <Toolbar />
+        </div>
+        <div className={styles.canvasContainer}>
+          <CanvasContainer />
+        </div>
       </div>
-      <div className={styles.canvasContainer}>
-        <CanvasContainer />
-      </div>
-      <div className={styles.toolbarContainer}>
-        <Toolbar />
-      </div>
-    </div>
+
+      <SessionModal
+        show={showSessionModal}
+        onCancel={() => setShowSessionModal(false)}
+        onResetSession={onResetSession}
+      />
+    </>
   );
 };
 

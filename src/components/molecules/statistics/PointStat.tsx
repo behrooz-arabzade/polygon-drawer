@@ -4,16 +4,21 @@ import { RootState } from "store/store";
 import styles from "./statistics.module.css";
 
 const PointStat: FC = () => {
-  const canvasData = useSelector((state: RootState) => state.canvases.tabs[state.canvases.selectedTabId].canvasData);
+  //...... redux states ......//
+  const canvasData = useSelector(
+    (state: RootState) =>
+      state.canvases.tabs[state.canvases.selectedTabId].canvasData
+  );
+  //...... redux states ......//
 
+  //...... Constants ......//
   const pointNumber = canvasData.canvasObjects.reduce((sum, obj) => {
     sum += obj.points.length;
-    return sum
+    return sum;
   }, 0);
+  //...... Constants ......//
 
-  return (
-    <p className={styles.text}>{`Point number: ${pointNumber}`}</p>
-  );
+  return <p className={styles.text}>{`Point number: ${pointNumber}`}</p>;
 };
 
 export default React.memo(PointStat);

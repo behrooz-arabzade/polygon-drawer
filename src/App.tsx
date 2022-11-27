@@ -2,7 +2,7 @@ import "./App.css";
 import Main from "components/pages/main/Main";
 import { Provider } from "react-redux";
 import { persistor, store } from "store/store";
-import { PersistGate } from 'redux-persist/integration/react';
+import { PersistGate } from "redux-persist/integration/react";
 
 function App() {
   return (

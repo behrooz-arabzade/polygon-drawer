@@ -3,19 +3,19 @@ import { useSelector } from "react-redux";
 import { RootState } from "store/store";
 import styles from "./statistics.module.css";
 
-const ObjectStat: FC = () => {
+const CanvasSize: FC = () => {
   //...... redux states ......//
-  const canvasData = useSelector(
+  const size = useSelector(
     (state: RootState) =>
-      state.canvases.tabs[state.canvases.selectedTabId].canvasData
+      state.canvases.tabs[state.canvases.selectedTabId].canvasData.size
   );
   //...... redux states ......//
 
   return (
     <p
       className={styles.text}
-    >{`Object number: ${canvasData.canvasObjects.length}`}</p>
+    >{`Canvas size: ${size.width} x ${size.height}`}</p>
   );
 };
 
-export default React.memo(ObjectStat);
+export default React.memo(CanvasSize);
