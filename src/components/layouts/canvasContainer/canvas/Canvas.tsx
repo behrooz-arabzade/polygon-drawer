@@ -7,10 +7,20 @@ import { KonvaEventObject } from "konva/lib/Node";
 import CanvasObject, {
   ICanvasObjectRef,
 } from "components/molecules/CanvasObject/CanvasObject";
-import { getMousePos, getRandomString, getPoint2d, isLeftClick, areNear } from './CanvasHelper';
+import {
+  getMousePos,
+  getRandomString,
+  getPoint2d,
+  isLeftClick,
+  areNear,
+} from "./CanvasHelper";
 import { Point2d } from "store/slices/canvasesSlice/type";
 import Polygon from "types/CanvasObjects/Polygon/Polygon";
-import { addCanvasObject, setCurrentDrawingId, setZoom } from "store/slices/canvasesSlice/canvasesSlice";
+import {
+  addCanvasObject,
+  setCurrentDrawingId,
+  setZoom,
+} from "store/slices/canvasesSlice/canvasesSlice";
 
 const Canvas: FC = () => {
   //...... local states ......//
@@ -20,7 +30,10 @@ const Canvas: FC = () => {
   //...... local states ......//
 
   //...... redux states ......//
-  const { zoom, canvasObjects, size, currentDrawingObjectId } = useSelector((state: RootState) => state.canvases.tabs[state.canvases.selectedTabId].canvasData);
+  const { zoom, canvasObjects, size, currentDrawingObjectId } = useSelector(
+    (state: RootState) =>
+      state.canvases.tabs[state.canvases.selectedTabId].canvasData
+  );
   const selectedTool = useSelector(
     (state: RootState) => state.toolbar.selectedTool
   );
@@ -28,7 +41,7 @@ const Canvas: FC = () => {
 
   //...... constants ......//
   const currentDrawingObject = useRef<ICanvasObjectRef>(null);
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useDispatch();
   //...... constants ......//
 
   //...... handlers ......//
@@ -44,7 +57,7 @@ const Canvas: FC = () => {
   const handleMouseDown = (event: KonvaEventObject<MouseEvent>) => {
     const mousePos = getMousePos(event.target.getStage());
     setMouseDownPos(getPoint2d(mousePos, zoom));
-  }
+  };
 
   const handleClick = (event: KonvaEventObject<MouseEvent>) => {
     if (!isLeftClick(event.evt)) return;
@@ -53,8 +66,7 @@ const Canvas: FC = () => {
       if (selectedTool === "polygon") {
         const mousePos = getPoint2d(getMousePos(event.target.getStage()), zoom);
 
-        if (areNear(mousePos, mouseDownPos))
-          startNewOne(mousePos);
+        if (areNear(mousePos, mouseDownPos)) startNewOne(mousePos);
       }
       return;
     }
@@ -69,7 +81,7 @@ const Canvas: FC = () => {
 
   const onObjectCompleted = () => {
     setDrawing(false);
-    dispatch(setCurrentDrawingId(null))
+    dispatch(setCurrentDrawingId(null));
   };
   //...... handlers ......//
 

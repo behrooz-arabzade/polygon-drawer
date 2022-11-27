@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import Tab from "components/molecules/Tab/Tab";
-import { FC } from "react";
+import React, { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addNewTab, selectTab } from "store/slices/canvasesSlice/canvasesSlice";
 import { getInitialCanvasData } from "store/slices/canvasesSlice/helper";
@@ -8,12 +8,14 @@ import { CanvasTab } from "store/slices/canvasesSlice/type";
 import { RootState } from "store/store";
 import { getRandomString } from "../canvasContainer/canvas/CanvasHelper";
 import styles from "./Tabs.module.css";
-import MuiTabs from '@mui/material/Tabs';
+import MuiTabs from "@mui/material/Tabs";
 
 const Tabs: FC = () => {
   //...... redux states ......//
   const tabs = useSelector((state: RootState) => state.canvases.tabs);
-  const selectedTabId = useSelector((state: RootState) => state.canvases.selectedTabId);
+  const selectedTabId = useSelector(
+    (state: RootState) => state.canvases.selectedTabId
+  );
   //...... redux states ......//
 
   //...... constants ......//
@@ -22,11 +24,11 @@ const Tabs: FC = () => {
 
   //...... handlers ......//
   const createNewTab = () => {
-    dispatch(addNewTab())
+    dispatch(addNewTab());
   };
 
   const handleTabChange = (newTabId: string) => {
-    dispatch(selectTab(newTabId))
+    dispatch(selectTab(newTabId));
   };
   //...... handlers ......//
   return (
@@ -41,30 +43,31 @@ const Tabs: FC = () => {
               allowScrollButtonsMobile
               value={selectedTabId}
             >
-              {
-                Object.values(tabs).map((tab) => {
-                  return (
-                    <Tab
-                      onClick={handleTabChange}
-                      key={tab.id}
-                      id={tab.id}
-                      value={tab.id}
-                      name={tab.name}
-                      selected={tab.id === selectedTabId}
-                    />
-                  )
-                })
-              }
+              {Object.values(tabs).map((tab) => {
+                return (
+                  <Tab
+                    onClick={handleTabChange}
+                    key={tab.id}
+                    id={tab.id}
+                    value={tab.id}
+                    name={tab.name}
+                    selected={tab.id === selectedTabId}
+                  />
+                );
+              })}
             </MuiTabs>
           </div>
-
         </>
       </div>
-      <Button variant="text" className={styles.addButton} onClick={createNewTab}>
+      <Button
+        variant="text"
+        className={styles.addButton}
+        onClick={createNewTab}
+      >
         +
       </Button>
     </div>
   );
 };
 
-export default Tabs;
+export default React.memo(Tabs);
